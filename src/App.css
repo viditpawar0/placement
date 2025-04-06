@@ -1,3 +1,126 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+h1 {
+  color: #4a90e2;
+  text-align: center;
+  margin-top: 20px;
+}
+
+nav {
+  background-color: #4a90e2;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #357ab8;
+}
+
+nav .active-link {
+  background-color: #357ab8; /* Highlight the active link */
+  color: #fff;
+}
+
+button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin: 5px; /* Add margin for spacing between buttons */
+}
+
+button:hover {
+  background-color: #357ab8;
+}
+
+.input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns for labels and inputs */
+  gap: 15px; /* Add spacing between rows and columns */
+  justify-content: center;
+  align-items: center;
+}
+
+.input-group label {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  font-weight: bold;
+  text-align: left;
+}
+
+.input-group input,
+.input-group select {
+  padding: 10px;
+  margin-top: 5px; /* Add spacing between label and input */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Add spacing between buttons */
+  justify-content: center; /* Center align the buttons */
+  margin-top: 20px; /* Add spacing above the buttons */
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  background-color: #f9f9f9;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+pre {
+  background-color: #f4f4f9;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +158,40 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.styled-table th, .styled-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.styled-table th {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.styled-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Align text to the left for better readability */
 }
