@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import './FormStyles.css';
 
 function DeleteUser() {
@@ -8,10 +10,16 @@ function DeleteUser() {
     setUserId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to delete user
-    console.log('Deleting user with ID:', userId);
+    try {
+      const response = await axios.delete(`${config.BASE_URL}/api/user/delete/${userId}/`);
+      console.log('User deleted successfully:', response.data);
+      alert('User deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('Failed to delete user. Please try again.');
+    }
   };
 
   return (

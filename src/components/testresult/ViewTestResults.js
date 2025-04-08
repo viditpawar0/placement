@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import config from '../../config';
 
 function ViewTestResults() {
   const { testId } = useParams();
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/testresult/test/${testId}/`)
+    fetch(`${config.BASE_URL}/api/testresult/test/${testId}/`)
       .then((response) => response.json())
-      .then((data) => setResults(data));
+      .then((data) => setResults(data))
+      .catch((error) => console.error('Error fetching test results:', error));
   }, [testId]);
 
   return (

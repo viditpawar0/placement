@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function DeletePlacement() {
@@ -8,10 +10,16 @@ function DeletePlacement() {
     setPlacementId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to delete placement
-    console.log('Deleting placement with ID:', placementId);
+    try {
+      const response = await axios.delete(`${config.BASE_URL}/api/placement/delete/${placementId}/`);
+      console.log('Placement deleted successfully:', response.data);
+      alert('Placement deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting placement:', error);
+      alert('Failed to delete placement. Please try again.');
+    }
   };
 
   return (

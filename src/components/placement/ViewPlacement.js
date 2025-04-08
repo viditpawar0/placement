@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function ViewPlacement() {
@@ -9,12 +11,16 @@ function ViewPlacement() {
     setPlacementId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to fetch placement data
-    console.log('Fetching placement with ID:', placementId);
-    // Mock response
-    setPlacementData({ id: placementId, student: 'John Doe', company: 'Tech Corp', job_role: 'Engineer', package: '10 LPA' });
+    try {
+      const response = await axios.get(`${config.BASE_URL}/api/placement/${placementId}/`);
+      setPlacementData(response.data);
+      console.log('Placement fetched successfully:', response.data);
+    } catch (error) {
+      console.error('Error fetching placement:', error);
+      alert('Failed to fetch placement. Please try again.');
+    }
   };
 
   return (

@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import '../user/FormStyles.css';
+import axios from 'axios';
+import config from '../../config';
 
 function UpdateInternship() {
-  const [formData, setFormData] = useState({ id: '', company: '', role: '', stipend: '' });
+  const [formData, setFormData] = useState({
+    id: '',
+    role: '',
+    company_name: '',
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to update internship
-    console.log('Updating internship:', formData);
+    try {
+      const response = await axios.put(`${config.BASE_URL}/api/internship/edit/${formData.id}/`, formData);
+      console.log('Internship updated successfully:', response.data);
+      alert('Internship updated successfully!');
+    } catch (error) {
+      console.error('Error updating internship:', error);
+      alert('Failed to update internship. Please try again.');
+    }
   };
 
   return (
@@ -29,16 +41,6 @@ function UpdateInternship() {
         />
       </div>
       <div className="form-group">
-        <label>Company:</label>
-        <input
-          type="text"
-          name="company"
-          value={formData.company}
-          onChange={handleChange}
-          placeholder="Enter new company name"
-        />
-      </div>
-      <div className="form-group">
         <label>Role:</label>
         <input
           type="text"
@@ -46,16 +48,18 @@ function UpdateInternship() {
           value={formData.role}
           onChange={handleChange}
           placeholder="Enter new role"
+          required
         />
       </div>
       <div className="form-group">
-        <label>Stipend:</label>
+        <label>Company Name:</label>
         <input
-          type="number"
-          name="stipend"
-          value={formData.stipend}
+          type="text"
+          name="company_name"
+          value={formData.company_name}
           onChange={handleChange}
-          placeholder="Enter new stipend"
+          placeholder="Enter new company name"
+          required
         />
       </div>
       <button className="form-button" type="submit">Update Internship</button>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function ViewTest() {
@@ -9,12 +11,16 @@ function ViewTest() {
     setTestId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to fetch test data
-    console.log('Fetching test with ID:', testId);
-    // Mock response
-    setTestData({ id: testId, name: 'Sample Test', description: 'Sample Description', test_type: 'MCQ', date: '2023-10-01' });
+    try {
+      const response = await axios.get(`${config.BASE_URL}/api/test/${testId}/`);
+      setTestData(response.data);
+      console.log('Test fetched successfully:', response.data);
+    } catch (error) {
+      console.error('Error fetching test:', error);
+      alert('Failed to fetch test. Please try again.');
+    }
   };
 
   return (

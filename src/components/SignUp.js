@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import config from '../../config';
-import './FormStyles.css'; // Add a CSS file for consistent form styling
+import config from '../config';
+import './FormStyles.css';
 
-function CreateUser() {
+function SignUp({ onLoginClick }) {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     email: '',
-    role: 'student',
-    course_pursuing: 'computer_science',
     first_name: '',
     last_name: '',
+    course_pursuing: 'computer_science',
+    role: 'student',
   });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,17 +23,19 @@ function CreateUser() {
     e.preventDefault();
     try {
       const response = await axios.post(`${config.BASE_URL}/api/user/createuser/`, formData);
-      console.log('User created successfully:', response.data);
-      alert('User created successfully!');
-    } catch (error) {
-      console.error('Error creating user:', error);
-      alert('Failed to create user. Please try again.');
+      console.log('Sign-up successful:', response.data);
+      alert('Account created successfully! Please log in.');
+      onLoginClick();
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.error || err.response?.data?.message || 'An unexpected error occurred. Please try again.');
     }
   };
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      <h2>Create User</h2>
+      <h2>Sign Up</h2>
+      {error && <p className="error-message error-top">{error}</p>}
       <div className="form-group">
         <label>Username:</label>
         <input
@@ -40,7 +43,7 @@ function CreateUser() {
           name="username"
           value={formData.username}
           onChange={handleChange}
-          placeholder="Enter username"
+          placeholder="Enter your username"
           required
         />
       </div>
@@ -51,7 +54,7 @@ function CreateUser() {
           name="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="Enter password"
+          placeholder="Enter your password"
           required
         />
       </div>
@@ -62,7 +65,29 @@ function CreateUser() {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="Enter email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>First Name:</label>
+        <input
+          type="text"
+          name="first_name"
+          value={formData.first_name}
+          onChange={handleChange}
+          placeholder="Enter your first name"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>Last Name:</label>
+        <input
+          type="text"
+          name="last_name"
+          value={formData.last_name}
+          onChange={handleChange}
+          placeholder="Enter your last name"
           required
         />
       </div>
@@ -96,31 +121,12 @@ function CreateUser() {
           <option value="economics">Economics</option>
         </select>
       </div>
-      <div className="form-group">
-        <label>First Name:</label>
-        <input
-          type="text"
-          name="first_name"
-          value={formData.first_name}
-          onChange={handleChange}
-          placeholder="Enter first name"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label>Last Name:</label>
-        <input
-          type="text"
-          name="last_name"
-          value={formData.last_name}
-          onChange={handleChange}
-          placeholder="Enter last name"
-          required
-        />
-      </div>
-      <button className="form-button" type="submit">Create User</button>
+      <button className="form-button" type="submit">Sign Up</button>
+      <p>
+        Already have an account? <button type="button" className="link-button" onClick={onLoginClick}>Login</button>
+      </p>
     </form>
   );
 }
 
-export default CreateUser;
+export default SignUp;

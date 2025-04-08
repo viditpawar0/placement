@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../user/FormStyles.css';
+import axios from 'axios';
+import config from '../../config';
 
 function DeleteCourse() {
   const [courseId, setCourseId] = useState('');
@@ -8,10 +10,16 @@ function DeleteCourse() {
     setCourseId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to delete course
-    console.log('Deleting course with ID:', courseId);
+    try {
+      const response = await axios.delete(`${config.BASE_URL}/api/course/delete/${courseId}/`);
+      console.log('Course deleted successfully:', response.data);
+      alert('Course deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting course:', error);
+      alert('Failed to delete course. Please try again.');
+    }
   };
 
   return (

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function UpdatePlacement() {
@@ -8,10 +10,16 @@ function UpdatePlacement() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to update placement
-    console.log('Updating placement:', formData);
+    try {
+      const response = await axios.put(`${config.BASE_URL}/api/placement/edit/${formData.id}/`, formData);
+      console.log('Placement updated successfully:', response.data);
+      alert('Placement updated successfully!');
+    } catch (error) {
+      console.error('Error updating placement:', error);
+      alert('Failed to update placement. Please try again.');
+    }
   };
 
   return (

@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
+import config from '../../config';
 
 function ViewStudentResults() {
-  const { username } = useParams();
+  const { user } = useContext(AppContext);
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/testresult/student/${username}/`)
-      .then((response) => response.json())
-      .then((data) => setResults(data));
-  }, [username]);
+    if (user.username) {
+      // Fetch test results for the logged-in user
+      fetch(`${config.BASE_URL}/api/testresult/student/${user.username}/`)
+        .then((response) => response.json())
+        .then((data) => setResults(data))
+        .catch((error) => console.error('Error fetching test results:', error));
+    }
+  }, [user.username]);
 
   return (
     <div>
-      <h2>Results for {username}</h2>
+      <h2>Results for {user.username}</h2>
       <ul>
         {results.map((result) => (
           <li key={result.id}>

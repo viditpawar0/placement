@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function UpdateTest() {
@@ -8,10 +10,16 @@ function UpdateTest() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to update test
-    console.log('Updating test:', formData);
+    try {
+      const response = await axios.put(`${config.BASE_URL}/api/test/edit/${formData.id}/`, formData);
+      console.log('Test updated successfully:', response.data);
+      alert('Test updated successfully!');
+    } catch (error) {
+      console.error('Error updating test:', error);
+      alert('Failed to update test. Please try again.');
+    }
   };
 
   return (

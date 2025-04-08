@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function ViewCourse() {
@@ -9,17 +11,21 @@ function ViewCourse() {
     setCourseId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to fetch course data
-    console.log('Fetching course with ID:', courseId);
-    // Mock response
-    setCourseData({ id: courseId, name: 'Sample Course', description: 'Sample Description', duration: '3 months', fee: '5000' });
+    try {
+      const response = await axios.get(`${config.BASE_URL}/api/course/${courseId}/`);
+      setCourseData(response.data);
+      console.log('Course fetched successfully:', response.data);
+    } catch (error) {
+      console.error('Error fetching course:', error);
+      alert('Failed to fetch course. Please try again.');
+    }
   };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
+    <div>
+      <form className="form-container" onSubmit={handleSubmit}>
         <h2>View Course</h2>
         <div className="form-group">
           <label>Course ID:</label>
@@ -34,12 +40,12 @@ function ViewCourse() {
         <button className="form-button" type="submit">View Course</button>
       </form>
       {courseData && (
-        <div className="user-details">
+        <div className="course-details">
           <h3>Course Details</h3>
           <p><strong>Name:</strong> {courseData.name}</p>
           <p><strong>Description:</strong> {courseData.description}</p>
           <p><strong>Duration:</strong> {courseData.duration}</p>
-          <p><strong>Fee:</strong> {courseData.fee}</p>
+          <p><strong>Certification:</strong> {courseData.certification ? 'Yes' : 'No'}</p>
         </div>
       )}
     </div>

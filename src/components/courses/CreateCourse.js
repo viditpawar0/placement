@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../user/FormStyles.css';
+import axios from 'axios';
+import config from '../../config';
 
 function CreateCourse() {
   const [formData, setFormData] = useState({ name: '', description: '', duration: '', fee: '' });
@@ -8,10 +10,16 @@ function CreateCourse() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to create course
-    console.log('Creating course:', formData);
+    try {
+      const response = await axios.post(`${config.BASE_URL}/api/course/add/`, formData);
+      console.log('Course created successfully:', response.data);
+      alert('Course created successfully!');
+    } catch (error) {
+      console.error('Error creating course:', error);
+      alert('Failed to create course. Please try again.');
+    }
   };
 
   return (

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function DeleteTest() {
@@ -8,10 +10,16 @@ function DeleteTest() {
     setTestId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to delete test
-    console.log('Deleting test with ID:', testId);
+    try {
+      const response = await axios.delete(`${config.BASE_URL}/api/test/delete/${testId}/`);
+      console.log('Test deleted successfully:', response.data);
+      alert('Test deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting test:', error);
+      alert('Failed to delete test. Please try again.');
+    }
   };
 
   return (

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function CreateTest() {
   const [formData, setFormData] = useState({
     name: '',
+    course: '',
     description: '',
     syllabus: '',
     test_type: '',
@@ -16,10 +19,16 @@ function CreateTest() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to create test
-    console.log('Creating test:', formData);
+    try {
+      const response = await axios.post(`${config.BASE_URL}/api/test/create/`, formData);
+      console.log('Test created successfully:', response.data);
+      alert('Test created successfully!');
+    } catch (error) {
+      console.error('Error creating test:', error);
+      alert('Failed to create test. Please try again.');
+    }
   };
 
   return (
@@ -33,6 +42,17 @@ function CreateTest() {
           value={formData.name}
           onChange={handleChange}
           placeholder="Enter test name"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>Course:</label>
+        <input
+          type="text"
+          name="course"
+          value={formData.course}
+          onChange={handleChange}
+          placeholder="Enter course name"
           required
         />
       </div>
@@ -72,11 +92,11 @@ function CreateTest() {
       <div className="form-group">
         <label>Duration:</label>
         <input
-          type="text"
+          type="number"
           name="duration"
           value={formData.duration}
           onChange={handleChange}
-          placeholder="Enter duration"
+          placeholder="Enter duration (in minutes)"
           required
         />
       </div>

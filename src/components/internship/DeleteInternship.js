@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function DeleteInternship() {
@@ -8,10 +10,16 @@ function DeleteInternship() {
     setInternshipId(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to delete internship
-    console.log('Deleting internship with ID:', internshipId);
+    try {
+      const response = await axios.delete(`${config.BASE_URL}/api/internship/delete/${internshipId}/`);
+      console.log('Internship deleted successfully:', response.data);
+      alert('Internship deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting internship:', error);
+      alert('Failed to delete internship. Please try again.');
+    }
   };
 
   return (

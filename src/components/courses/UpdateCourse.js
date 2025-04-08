@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../user/FormStyles.css';
+import axios from 'axios';
+import config from '../../config';
 
 function UpdateCourse() {
   const [formData, setFormData] = useState({ id: '', name: '', description: '', fee: '' });
@@ -8,10 +10,16 @@ function UpdateCourse() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to update course
-    console.log('Updating course:', formData);
+    try {
+      const response = await axios.put(`${config.BASE_URL}/api/course/edit/${formData.id}/`, formData);
+      console.log('Course updated successfully:', response.data);
+      alert('Course updated successfully!');
+    } catch (error) {
+      console.error('Error updating course:', error);
+      alert('Failed to update course. Please try again.');
+    }
   };
 
   return (

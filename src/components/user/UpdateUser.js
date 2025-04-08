@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import './FormStyles.css';
 
 function UpdateUser() {
@@ -8,10 +10,16 @@ function UpdateUser() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to update user
-    console.log('Updating user:', formData);
+    try {
+      const response = await axios.put(`${config.BASE_URL}/api/user/edit/${formData.username}/`, formData);
+      console.log('User updated successfully:', response.data);
+      alert('User updated successfully!');
+    } catch (error) {
+      console.error('Error updating user:', error);
+      alert('Failed to update user. Please try again.');
+    }
   };
 
   return (

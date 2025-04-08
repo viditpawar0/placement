@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../../config';
 import '../user/FormStyles.css';
 
 function CreatePlacement() {
-  const [formData, setFormData] = useState({ student: '', company: '', job_role: '', package: '' });
+  const [formData, setFormData] = useState({
+    student: '',
+    company: '',
+    package: '',
+    job_role: '',
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to create placement
-    console.log('Creating placement:', formData);
+    try {
+      const response = await axios.post(`${config.BASE_URL}/api/placement/createplacements/`, formData);
+      console.log('Placement created successfully:', response.data);
+      alert('Placement created successfully!');
+    } catch (error) {
+      console.error('Error creating placement:', error);
+      alert('Failed to create placement. Please try again.');
+    }
   };
 
   return (
@@ -24,7 +37,7 @@ function CreatePlacement() {
           name="student"
           value={formData.student}
           onChange={handleChange}
-          placeholder="Enter student name"
+          placeholder="Enter student username"
           required
         />
       </div>
@@ -40,17 +53,6 @@ function CreatePlacement() {
         />
       </div>
       <div className="form-group">
-        <label>Job Role:</label>
-        <input
-          type="text"
-          name="job_role"
-          value={formData.job_role}
-          onChange={handleChange}
-          placeholder="Enter job role"
-          required
-        />
-      </div>
-      <div className="form-group">
         <label>Package:</label>
         <input
           type="number"
@@ -58,6 +60,17 @@ function CreatePlacement() {
           value={formData.package}
           onChange={handleChange}
           placeholder="Enter package"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>Job Role:</label>
+        <input
+          type="text"
+          name="job_role"
+          value={formData.job_role}
+          onChange={handleChange}
+          placeholder="Enter job role"
           required
         />
       </div>

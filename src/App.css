@@ -6,9 +6,13 @@ body {
 }
 
 h1 {
-  color: #4a90e2;
+  color: #4a90e2; /* Blue for non-admin */
   text-align: center;
   margin-top: 20px;
+}
+
+.admin-theme h1 {
+  color: #e74c3c; /* Red for admin */
 }
 
 nav {
@@ -194,4 +198,69 @@ pre {
   margin: 20px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: left; /* Align text to the left for better readability */
+}
+
+.admin-theme nav {
+  background-color: #e74c3c; /* Red for admin */
+}
+
+.admin-theme nav a {
+  color: white;
+}
+
+.admin-theme nav a:hover {
+  background-color: #c0392b; /* Darker red for hover */
+}
+
+.admin-theme nav .active-link {
+  background-color: #c0392b; /* Highlight active link in darker red */
+}
+
+.admin-theme button {
+  background-color: #e74c3c; /* Red for admin buttons */
+}
+
+.admin-theme button:hover {
+  background-color: #c0392b; /* Darker red for hover */
+}
+
+.admin-theme .styled-table th {
+  background-color: #e74c3c; /* Red for table headers */
+}
+
+.admin-theme .styled-table tr:hover {
+  background-color: #f9d6d5; /* Light red for hover rows */
+}
+
+/* Default blue theme for non-admin users */
+.user-theme nav {
+  background-color: #4a90e2; /* Blue for non-admin */
+}
+
+.user-theme nav a {
+  color: white;
+}
+
+.user-theme nav a:hover {
+  background-color: #357ab8; /* Darker blue for hover */
+}
+
+.user-theme nav .active-link {
+  background-color: #357ab8; /* Highlight active link in darker blue */
+}
+
+.user-theme button {
+  background-color: #4a90e2; /* Blue for non-admin buttons */
+}
+
+.user-theme button:hover {
+  background-color: #357ab8; /* Darker blue for hover */
+}
+
+.user-theme .styled-table th {
+  background-color: #4a90e2; /* Blue for table headers */
+}
+
+.user-theme .styled-table tr:hover {
+  background-color: #e6f7ff; /* Light blue for hover rows */
 }
