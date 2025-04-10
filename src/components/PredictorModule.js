@@ -10,7 +10,8 @@ const PredictorModule = () => {
     workshops_certifications: '',
     aptitude_test_score: '',
     soft_skills: '',
-    technical_skills: '',
+    extracurricular_activities: '0',
+    placement_training: '0',
   });
   const [response, setResponse] = useState(null);
 
@@ -20,9 +21,9 @@ const PredictorModule = () => {
   };
 
   const predictPlacement = async () => {
-    const { cgpa, internships, projects, workshops_certifications, aptitude_test_score, soft_skills, technical_skills } = formData;
+    const { cgpa, internships, projects, workshops_certifications, aptitude_test_score, soft_skills, extracurricular_activities, placement_training } = formData;
 
-    if (!cgpa || !internships || !projects || !workshops_certifications || !aptitude_test_score || !soft_skills || !technical_skills) {
+    if (!cgpa || !internships || !projects || !workshops_certifications || !aptitude_test_score || !soft_skills) {
       alert('Please fill in all the required fields.');
       return;
     }
@@ -100,14 +101,26 @@ const PredictorModule = () => {
           />
         </label>
         <label>
-          Technical Skills (1-5):
-          <input
-            type="number"
-            name="technical_skills"
-            placeholder="Rate technical skills (1-5)"
-            value={formData.technical_skills}
+          Extracurricular Activities:
+          <select
+            name="extracurricular_activities"
+            value={formData.extracurricular_activities}
             onChange={handleChange}
-          />
+          >
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </label>
+        <label>
+          Placement Training:
+          <select
+            name="placement_training"
+            value={formData.placement_training}
+            onChange={handleChange}
+          >
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
         </label>
       </div>
       <div className="button-group">
